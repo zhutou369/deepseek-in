@@ -13,6 +13,16 @@ layout: layouts/base.njk
       <div style="color:#94a3b8; font-size:14px;">
         發布時間：{{ date | dateFilter }} &nbsp; | &nbsp; 閱讀對象：全球 IT 決策者與架構師
       </div>
+      {% if tags and tags.length > 1 %}
+        <div class="post-tag-list" style="justify-content:center;">
+          <span>Tags：</span>
+          {% for tag in tags %}
+            {% if tag != "posts" %}
+              <a href="/tags/{{ tag | tagSlug }}/">{{ tag }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
     </header>
 
     <section class="post-body" style="font-size: 17px; color: #334155; line-height: 1.8; max-width: 800px; margin: 0 auto;">

@@ -48,6 +48,7 @@
         <ul class="nav-links">
           <li><a href="/" {% if page.url == "/" %}class="active"{% endif %}>智能集成首頁</a></li>
           <li><a href="/posts/" {% if page.url.startsWith('/posts/') %}class="active"{% endif %}>技術檔案中心</a></li>
+          <li><a href="/tags/" {% if page.url and page.url.startsWith("/tags/") %}class="active"{% endif %}>Tags</a></li>
         </ul>
       </nav>
     </div>

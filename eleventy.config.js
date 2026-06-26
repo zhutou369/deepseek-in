@@ -1,4 +1,6 @@
 module.exports = function (eleventyConfig) {
+  const systemTags = new Set(["all", "posts", "post", "nav", "eleventyNavigation"]);
+
   // 1. 🌟 核心修正：將所有靜態資源複製路徑全部對齊 src/ 開頭
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/static");
@@ -14,10 +16,37 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  // 從文章 Front Matter 抽取可見 Tags，過濾 posts/all 等系統內置標籤
+  eleventyConfig.addCollection("tagList", function (collectionApi) {
+    const tagSet = new Set();
+    collectionApi.getFilteredByGlob("src/posts/*.md").forEach((item) => {
+      const tags = Array.isArray(item.data.tags) ? item.data.tags : [];
+      tags.forEach((tag) => {
+        const normalizedTag = String(tag || "").trim();
+        if (normalizedTag && !systemTags.has(normalizedTag)) {
+          tagSet.add(normalizedTag);
+        }
+      });
+    });
+    return [...tagSet].sort((a, b) => a.localeCompare(b, "zh-HK"));
+  });
+
   // 3. 註冊首頁專用的 limit 過濾器
   eleventyConfig.addFilter("limit", function (arr, limit) {
     if (!Array.isArray(arr)) return [];
     return arr.slice(0, limit);
+  });
+
+  eleventyConfig.addFilter("postsByTag", function (posts, tag) {
+    if (!Array.isArray(posts)) return [];
+    return posts.filter((post) => {
+      const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
+      return tags.includes(tag);
+    });
+  });
+
+  eleventyConfig.addFilter("tagSlug", function (tag) {
+    return encodeURIComponent(String(tag || "").trim());
   });
 
   // 4. 香港繁體標準時間格式化過濾器 (YYYY年MM月DD日)
