@@ -6,8 +6,8 @@ pagination:
   alias: tag
 permalink: "/tags/{{ tag | tagSlug }}/index.html"
 eleventyComputed:
-  title: "Tags：{{ tag }} | DeepSeek 香港情報站"
-  description: "瀏覽 DeepSeek 香港情報站中與 {{ tag }} 相關的實操文章、教學和技術筆記。"
+  title: "Tags：{{ tag }} | {{ site.brand }}"
+  description: "瀏覽 {{ site.brand }} 中與 {{ tag }} 相關的實操文章與教程。"
 ---
 
 {% set tagPosts = collections.posts | postsByTag(tag) %}

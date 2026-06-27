@@ -1,6 +1,9 @@
 ---
 layout: layouts/base.njk
-title: DeepSeek 技術檔案中心與整合指南庫
+title: DeepSeek 技術文章與整合指南
+description: 瀏覽 DeepSeek 網頁版登入、API 接入、提示詞技巧、錯誤排查與本地部署等繁體中文教程。
+eleventyComputed:
+  noindex: "{{ pagination.pageNumber > 0 }}"
 pagination:
   data: collections.posts
   size: 10
@@ -11,9 +14,10 @@ permalink: "posts/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumbe
 
 <div class="container" style="padding-top: 60px;">
   {# 列表頁 H1：獨享唯一權重 #}
-  <h1 style="font-size: 32px; color: var(--bg-dark); margin-bottom: 40px; border-left: 6px solid var(--primary); padding-left: 20px;">
-    產業應用全量文章檔案
+  <h1 style="font-size: 32px; color: var(--bg-dark); margin-bottom: 20px; border-left: 6px solid var(--primary); padding-left: 20px;">
+    DeepSeek 技術文章列表
   </h1>
+  <p style="color:#64748b; margin-bottom:40px;">優先收錄可直接照做的入門教程；部分早期自動生成內容已從搜尋索引中排除，但仍保留供參考。</p>
 
   <div style="display: grid; gap: 30px; grid-template-columns: 1fr;">
     {% for post in posts %}
@@ -21,7 +25,7 @@ permalink: "posts/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumbe
         <div style="font-size: 14px; color: var(--primary); margin-bottom: 10px;">{{ post.date | dateFilter }}</div>
         <h2 style="margin:0 0 15px 0; font-size: 24px;"><a href="{{ post.url }}" style="text-decoration:none; color: var(--bg-dark);">{{ post.data.title }}</a></h2>
         <p style="color:#64748b; font-size:15px; margin-bottom:15px;">{{ post.data.description }}</p>
-        <a href="{{ post.url }}" style="color:var(--primary); text-decoration:none; font-weight:600; font-size:14px;">深入探索全棧技術 &raquo;</a>
+        <a href="{{ post.url }}" style="color:var(--primary); text-decoration:none; font-weight:600; font-size:14px;">閱讀全文 &raquo;</a>
       </article>
     {% endfor %}
   </div>
