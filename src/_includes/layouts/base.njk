@@ -1,112 +1,199 @@
-<!DOCTYPE html>
-<html lang="zh-HK">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% if site.googleSiteVerification %}
-  <meta name="google-site-verification" content="{{ site.googleSiteVerification }}">
-  {% endif %}
-  {% set docTitle = title or site.title %}
-  {% set metaDescription = description or site.description %}
-  {% set canonicalPath = canonicalUrl or page.url or "/" %}
-  {% set canonical = site.url + canonicalPath %}
-  {% set rawImage = ogImage or coverImage or site.ogImage or "/static/og-default.png" %}
-  {% set shareImage = (rawImage if not rawImage.endsWith('.svg') else site.ogImage) | assetUrl %}
-  {% set shareImageAbs = site.url + shareImage %}
-  <link rel="icon" href="/static/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.brand }}" href="/feed.xml">
-  <title>{% if page.url != "/" %}{{ docTitle }} | {{ site.brand }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name="description" content="{{ metaDescription }}">
-  <meta name="keywords" content="{{ pageKeywords or site.keywords }}">
-  {% if noindex %}
-  <meta name="robots" content="noindex,follow">
-  {% else %}
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  {% endif %}
-  <link rel="canonical" href="{{ canonical }}">
-  <meta property="og:type" content="{% if layout == 'layouts/post.njk' %}article{% else %}website{% endif %}">
-  <meta property="og:title" content="{{ docTitle }}">
-  <meta property="og:description" content="{{ metaDescription }}">
-  <meta property="og:url" content="{{ canonical }}">
-  <meta property="og:site_name" content="{{ site.brand }}">
-  <meta property="og:locale" content="{{ site.locale }}">
-  <meta property="og:image" content="{{ shareImageAbs }}">
-  <meta property="og:image:alt" content="{{ docTitle }}">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="{{ shareImageAbs }}">
-  <script type="application/ld+json">
-{{ {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": site.brand,
-  "url": site.url,
-  "description": site.description
-} | dump | safe }}
-  </script>
-  <style>
-    :root { --primary: #06b6d4; --primary-dark: #0891b2; --bg-dark: #0f172a; --text-main: #334155; --border: #e2e8f0; }
-    body { font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; color: var(--text-main); margin: 0; padding: 0; background: #fff; }
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
-    .site-header { border-bottom: 1px solid var(--border); padding: 25px 0; background: #fff; position: sticky; top: 0; z-index: 1000; }
-    .header-nav { display: flex; justify-content: space-between; align-items: center; }
-    .logo a { text-decoration: none; color: var(--bg-dark); font-weight: 800; font-size: 22px; }
-    .logo div { font-weight: 800; font-size: 22px; color: var(--bg-dark); }
-    .nav-links { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
-    .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; transition: 0.3s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
-    .site-footer { background: #f8fafc; border-top: 1px solid var(--border); padding: 60px 0 30px; margin-top: 80px; }
-    .friend-section h4 { font-size: 16px; margin-bottom: 20px; color: var(--bg-dark); }
-    .friend-grid { display: flex; flex-wrap: wrap; gap: 15px 30px; border-bottom: 1px solid var(--border); padding-bottom: 30px; margin-bottom: 30px; }
-    .friend-grid a { text-decoration: none; color: #64748b; font-size: 14px; }
-    .friend-grid a:hover { color: var(--primary); }
-    .copy { text-align: center; font-size: 13px; color: #94a3b8; }
-  </style>
-  {% if site.gaId %}
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.gaId }}"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '{{ site.gaId }}');
-  </script>
-  {% endif %}
-  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer></script>
-  <script>window.addEventListener("load",function(){if(window.LA){LA.init({id:"{{ site.laId }}",ck:"{{ site.laId }}"})}})</script>
-</head>
-<body>
-  <header class="site-header">
-    <div class="container header-nav">
-      {% if page.url == "/" %}
-        <h1 class="logo" style="margin:0;"><a href="/">{{ site.brand }}</a></h1>
-      {% else %}
-        <div class="logo"><a href="/">{{ site.brand }}</a></div>
-      {% endif %}
-      <nav>
-        <ul class="nav-links">
-          <li><a href="/" {% if page.url == "/" %}class="active"{% endif %}>首頁</a></li>
-          <li><a href="/posts/" {% if page.url.startsWith('/posts/') %}class="active"{% endif %}>技術文章</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <main>{{ content | safe }}</main>
-  <footer class="site-footer">
-    <div class="container">
-      <div class="friend-section">
-        <h4>相關 DeepSeek 資料站</h4>
-        <div class="friend-grid">
-          <a href="https://deepseek-chat.com" target="_blank" rel="noopener">DeepSeek 對話入口整理</a>
-          <a href="https://hk-deepseek.com" target="_blank" rel="noopener">DeepSeek 香港繁體資料</a>
-          <a href="https://deepseek-1.com" target="_blank" rel="noopener">DeepSeek 技術文章</a>
-          <a href="https://deepseek-my.com" target="_blank" rel="noopener">DeepSeek 馬來西亞資料</a>
-        </div>
-      </div>
-      <div class="copy">
-        <p>&copy; 2026 {{ site.brand }} · 本站專注國際版與企業整合，非 DeepSeek 官方網站。 · <a href="/privacy/" style="color:#94a3b8;">私隱政策</a></p>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
-
+<!DOCTYPE html>
+
+<html lang="zh-HK">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% if site.googleSiteVerification %}
+
+  <meta name="google-site-verification" content="{{ site.googleSiteVerification }}">
+
+  {% endif %}
+
+  {% set docTitle = title or site.title %}
+
+  {% set metaDescription = description or site.description %}
+
+  {% set canonicalPath = canonicalUrl or page.url or "/" %}
+
+  {% set canonical = site.url + canonicalPath %}
+
+  {% set rawImage = ogImage or coverImage or site.ogImage or "/static/og-default.png" %}
+
+  {% set shareImage = (rawImage if not rawImage.endsWith('.svg') else site.ogImage) | assetUrl %}
+
+  {% set shareImageAbs = site.url + shareImage %}
+
+  <link rel="icon" href="/static/favicon.png" type="image/png">
+
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+
+  <link rel="alternate" type="application/rss+xml" title="{{ site.brand }}" href="/feed.xml">
+
+  <title>{% if page.url != "/" %}{{ docTitle }} | {{ site.brand }}{% else %}{{ site.title }}{% endif %}</title>
+
+  <meta name="description" content="{{ metaDescription }}">
+
+  <meta name="keywords" content="{{ pageKeywords or site.keywords }}">
+
+  {% if noindex %}
+
+  <meta name="robots" content="noindex,follow">
+
+  {% else %}
+
+  <meta name="robots" content="index,follow,max-image-preview:large">
+
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical }}">
+
+  <meta property="og:type" content="{% if layout == 'layouts/post.njk' %}article{% else %}website{% endif %}">
+
+  <meta property="og:title" content="{{ docTitle }}">
+
+  <meta property="og:description" content="{{ metaDescription }}">
+
+  <meta property="og:url" content="{{ canonical }}">
+
+  <meta property="og:site_name" content="{{ site.brand }}">
+
+  <meta property="og:locale" content="{{ site.locale }}">
+
+  <meta property="og:image" content="{{ shareImageAbs }}">
+
+  <meta property="og:image:alt" content="{{ docTitle }}">
+
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="twitter:image" content="{{ shareImageAbs }}">
+
+  <script type="application/ld+json">
+
+{{ {
+
+  "@context": "https://schema.org",
+
+  "@type": "WebSite",
+
+  "name": site.brand,
+
+  "url": site.url,
+
+  "description": site.description
+
+} | dump | safe }}
+
+  </script>
+
+  <style>
+
+    :root { --primary: #06b6d4; --primary-dark: #0891b2; --bg-dark: #0f172a; --text-main: #334155; --border: #e2e8f0; }
+
+    body { font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; color: var(--text-main); margin: 0; padding: 0; background: #fff; }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+    .site-header { border-bottom: 1px solid var(--border); padding: 25px 0; background: #fff; position: sticky; top: 0; z-index: 1000; }
+
+    .header-nav { display: flex; justify-content: space-between; align-items: center; }
+
+    .logo a { text-decoration: none; color: var(--bg-dark); font-weight: 800; font-size: 22px; }
+
+    .logo div { font-weight: 800; font-size: 22px; color: var(--bg-dark); }
+
+    .nav-links { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; }
+
+    .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; transition: 0.3s; }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+    .site-footer { background: #f8fafc; border-top: 1px solid var(--border); padding: 60px 0 30px; margin-top: 80px; }
+
+    .friend-section h4 { font-size: 16px; margin-bottom: 20px; color: var(--bg-dark); }
+
+    .friend-grid { display: flex; flex-wrap: wrap; gap: 15px 30px; border-bottom: 1px solid var(--border); padding-bottom: 30px; margin-bottom: 30px; }
+
+    .friend-grid a { text-decoration: none; color: #64748b; font-size: 14px; }
+
+    .friend-grid a:hover { color: var(--primary); }
+
+    .copy { text-align: center; font-size: 13px; color: #94a3b8; }
+
+  </style>
+
+  {% if site.gaId %}
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.gaId }}"></script>
+
+  <script>
+
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag(){dataLayer.push(arguments);}
+
+    gtag('js', new Date());
+
+    gtag('config', '{{ site.gaId }}');
+
+  </script>
+
+  {% endif %}
+
+  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer></script>
+
+  <script>window.addEventListener("load",function(){if(window.LA){LA.init({id:"{{ site.laId }}",ck:"{{ site.laId }}"})}})</script>
+
+</head>
+
+<body>
+
+  <header class="site-header">
+
+    <div class="container header-nav">
+
+      {% if page.url == "/" %}
+
+        <h1 class="logo" style="margin:0;"><a href="/">{{ site.brand }}</a></h1>
+
+      {% else %}
+
+        <div class="logo"><a href="/">{{ site.brand }}</a></div>
+
+      {% endif %}
+
+      <nav>
+
+        <ul class="nav-links">
+
+          <li><a href="/" {% if page.url == "/" %}class="active"{% endif %}>首頁</a></li>
+
+          <li><a href="/posts/" {% if page.url.startsWith('/posts/') %}class="active"{% endif %}>技術文章</a></li>
+
+        </ul>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+  <main>{{ content | safe }}</main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="copy">
+        <p>&copy; 2026 {{ site.brand }} · 本站專注國際版與企業整合，非 DeepSeek 官方網站。 · <a href="/privacy/" style="color:#94a3b8;">私隱政策</a> · <a href="/posts/" style="color:#94a3b8;">技術文章</a></p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
+
+
