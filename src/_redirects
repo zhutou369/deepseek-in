@@ -1,0 +1,9 @@
+/articles/     /posts/     301
+/articles/*    /posts/:splat 301
+/rss.xml       /feed.xml   301
+/atom.xml      /feed.xml   301
+/posts/deepseek-web-login-troubleshoot/  /posts/deepseek-global-api-onboarding/  301
+/posts/deepseek-api-key-and-limits/  /posts/deepseek-global-api-onboarding/  301
+/posts/deepseek-api-retry-guide/  /posts/deepseek-global-api-onboarding/  301
+/posts/deepseek-prompt-basics/  /posts/deepseek-multilingual-output/  301
+/posts/deepseek-ollama-local-setup/  /posts/deepseek-enterprise-rag-playbook/  301

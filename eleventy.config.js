@@ -15,15 +15,32 @@ function isPostIndexable(data) {
   return true;
 }
 
+const siteData = require("./src/_data/site.json");
+
+function assetVersion() {
+  return siteData.assetVersion || "1";
+}
+
+function cacheBustStaticUrl(url) {
+  const path = String(url || "").trim();
+  if (!path.startsWith("/static/")) return path;
+  if (/[?&]v=/.test(path)) return path;
+  return `${path}?v=${assetVersion()}`;
+}
+
 module.exports = function (eleventyConfig) {
   const systemTags = new Set(["all", "posts", "post", "nav", "eleventyNavigation"]);
 
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/static");
+  eleventyConfig.addPassthroughCopy({ "src/_headers": "_headers" });
+  eleventyConfig.addPassthroughCopy({ "src/_redirects": "_redirects" });
   eleventyConfig.addPassthroughCopy("src/images.txt");
   eleventyConfig.addPassthroughCopy("src/ai1");
   eleventyConfig.addPassthroughCopy("src/robots.txt");
   eleventyConfig.addPassthroughCopy({ "src/*.txt": "/" });
+
+  eleventyConfig.addFilter("assetUrl", cacheBustStaticUrl);
 
   eleventyConfig.addGlobalData("eleventyComputed", {
     noindex: (data) => {
@@ -95,6 +112,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("htmlDate", function (dateValue) {
     if (!dateValue) return "";
     return new Date(dateValue).toISOString().slice(0, 10);
+  });
+
+  eleventyConfig.addFilter("rfc822", function (dateValue) {
+    if (!dateValue) return "";
+    return new Date(dateValue).toUTCString();
   });
 
   return {

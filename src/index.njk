@@ -1,12 +1,12 @@
 ---
 layout: layouts/base.njk
-title: DeepSeek 下載、API 與產業應用指南
-description: 整理 DeepSeek 網頁版登入、API 密鑰申請、提示詞技巧、503/429 錯誤排查、本地部署與企業整合的繁體中文實操說明。
-pageKeywords: DeepSeek 登入,DeepSeek API,DeepSeek 提示詞,DeepSeek 教程,深度求索
+title: DeepSeek 國際版 API、企業 RAG 與產業整合指南
+description: 涵蓋 DeepSeek 跨境 API 部署、企業知識庫 RAG、多語言輸出、Slack/Teams 整合與產業 ROI 評估的繁體中文實操資料。
+pageKeywords: DeepSeek 國際版,DeepSeek 企業,DeepSeek RAG,DeepSeek API,深度求索
 ---
 
 <style>
-  .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; padding: 80px 0; text-align: center; }
+  .hero { background: linear-gradient(135deg, #0f172a 0%, #164e63 100%); color: #fff; padding: 80px 0; text-align: center; }
   .hero p { font-size: 18px; color: #94a3b8; max-width: 760px; margin: 20px auto; line-height: 1.7; }
   .hero h2 { font-size: 42px; margin: 0; }
   .matrix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: -40px 0 60px; }
@@ -19,7 +19,6 @@ pageKeywords: DeepSeek 登入,DeepSeek API,DeepSeek 提示詞,DeepSeek 教程,�
   @media (max-width: 768px) { .desc-flex { grid-template-columns: 1fr; } }
   .desc-content h2 { font-size: 28px; color: var(--bg-dark); margin-bottom: 20px; }
   .desc-content p { font-size: 16px; margin-bottom: 16px; color: #475569; line-height: 1.7; }
-  .desc-img img { width: 100%; border-radius: 16px; }
   .recent-posts-section { padding: 60px 0; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 30px; }
   .post-card { text-decoration: none; color: inherit; padding: 18px; border: 1px solid var(--border); border-radius: 8px; }
@@ -30,41 +29,41 @@ pageKeywords: DeepSeek 登入,DeepSeek API,DeepSeek 提示詞,DeepSeek 教程,�
 
 <section class="hero">
   <div class="container">
-    <h2>DeepSeek 使用指南與企業整合參考</h2>
-    <p>本站整理 DeepSeek 網頁版登入、API 接入、提示詞撰寫、錯誤排查與本地部署等實用資料，並提供 RAG、私有化部署的入門思路。內容以可執行步驟為主，並非 DeepSeek 官方網站。</p>
+    <h2>DeepSeek 國際版與企業整合指南</h2>
+    <p>deepseek-in.com 專注<strong>跨境 API、企業 RAG、多語言與協作工具整合</strong>，與 deepseek-1.com（通用技術）、deepseek-chat.com（網頁對話）內容互不重複。</p>
   </div>
 </section>
 
 <div class="container">
   <div class="matrix-grid">
     <div class="matrix-item">
-      <h3>網頁版登入排查</h3>
-      <p>登入失敗、503 忙碌、驗證碼異常與瀏覽器快取清理。</p>
-      <a href="/posts/deepseek-web-login-troubleshoot/">閱讀教程 →</a>
+      <h3>國際版 API 接入</h3>
+      <p>跨境部署、密鑰治理、延遲觀測與 429/503 合規重試。</p>
+      <a href="/posts/deepseek-global-api-onboarding/">閱讀教程 →</a>
     </div>
     <div class="matrix-item">
-      <h3>API 密鑰與限流</h3>
-      <p>API Key 申請、429 限流處理與 Token 用量觀察。</p>
-      <a href="/posts/deepseek-api-key-and-limits/">閱讀教程 →</a>
+      <h3>企業知識庫 RAG</h3>
+      <p>文檔切片、向量檢索、帶引用回答的最小可行架構。</p>
+      <a href="/posts/deepseek-enterprise-rag-playbook/">閱讀教程 →</a>
     </div>
     <div class="matrix-item">
-      <h3>503/429 重試策略</h3>
-      <p>指數退避、熔斷與高峰期降級方案。</p>
-      <a href="/posts/deepseek-api-retry-guide/">閱讀教程 →</a>
+      <h3>多語言輸出實戰</h3>
+      <p>繁中、英文、Hindi 等市場的 Prompt 鎖定與質量檢查。</p>
+      <a href="/posts/deepseek-multilingual-output/">閱讀教程 →</a>
     </div>
     <div class="matrix-item">
-      <h3>提示詞入門</h3>
-      <p>角色、任務、輸出格式三要素，降低幻覺。</p>
-      <a href="/posts/deepseek-prompt-basics/">閱讀教程 →</a>
+      <h3>Slack / Teams 整合</h3>
+      <p>工單摘要、站內搜尋、審批草稿等協作自動化。</p>
+      <a href="/posts/deepseek-slack-teams-workflow/">閱讀教程 →</a>
     </div>
     <div class="matrix-item">
-      <h3>本地 Ollama 部署</h3>
-      <p>在 macOS / Windows 拉取 DeepSeek 模型並檢查輸出。</p>
-      <a href="/posts/deepseek-ollama-local-setup/">閱讀教程 →</a>
+      <h3>產業 ROI 評估</h3>
+      <p>客服、法務、財報三大場景的投入產出衡量框架。</p>
+      <a href="/posts/deepseek-industry-roi-guide/">閱讀教程 →</a>
     </div>
     <div class="matrix-item">
       <h3>更多技術文章</h3>
-      <p>瀏覽完整列表，包含 API 安全與整合案例。</p>
+      <p>瀏覽完整列表與行業案例筆記。</p>
       <a href="/posts/">查看全部 →</a>
     </div>
   </div>
@@ -72,12 +71,13 @@ pageKeywords: DeepSeek 登入,DeepSeek API,DeepSeek 提示詞,DeepSeek 教程,�
   <section class="long-desc">
     <div class="desc-flex">
       <div class="desc-content">
-        <h2>先解決高頻使用問題</h2>
-        <p>多數團隊卡在 API 429/503、登入不穩、提示詞輸出格式混亂，或不清楚本地部署該選哪個模型。本站優先把這些場景拆成檢查清單。</p>
-        <p>若準備接入 API，建議先閱讀密鑰與限流說明，再搭配重試策略；若計劃私有化部署，可從 Ollama 入門教程開始，再評估 RAG 與向量庫需求。</p>
+        <h2>為什麼需要獨立國際版視角</h2>
+        <p>跨國團隊面對的是合規、多語言、協作工具鏈與 ROI 說服，而不只是「申請 API Key」。本站教程圍繞這些差異撰寫。</p>
+        <p>若你需要網頁聊天技巧，請訪問 <a href="https://deepseek-chat.com">deepseek-chat.com</a>；基礎 API 與 Ollama 部署見 <a href="https://deepseek-1.com">deepseek-1.com</a>。</p>
       </div>
-      <div class="desc-img">
-        <img src="https://neurowave.tech/images/img/img_deepseek-2.png" alt="DeepSeek 技術整合示意圖">
+      <div class="desc-content">
+        <h2>建議閱讀順序</h2>
+        <p>1. <a href="/posts/deepseek-global-api-onboarding/">國際版 API 接入</a> → 2. <a href="/posts/deepseek-enterprise-rag-playbook/">企業 RAG</a> → 3. <a href="/posts/deepseek-slack-teams-workflow/">Slack/Teams</a> → 4. <a href="/posts/deepseek-industry-roi-guide/">ROI 評估</a></p>
       </div>
     </div>
   </section>
