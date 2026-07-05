@@ -1,21 +1,5 @@
-function isPostIndexable(data) {
-  if (data.noindex === true || data.generated === true) return false;
-  if (data.featured === true) return true;
-
-  const desc = data.description || "";
-  const title = data.title || "";
-  const tags = Array.isArray(data.tags) ? data.tags : [];
-
-  if (desc.includes("專業技術解析與香港本地化實操指南")) return false;
-  if (/官方|權威|站群|SEOer|友鏈|友链|跨境流量|免翻牆|爆款文案|搞掂友鏈|全攻略|爽歪歪/.test(title)) return false;
-  if (/SEOer|自動檢測\+對接|狂降\d+%/.test(title)) return false;
-  if (/實戰帖|小夥伴們注意|手把手教你/.test(desc)) return false;
-  if (tags.includes("SEO優化")) return false;
-
-  return true;
-}
-
 const siteData = require("./src/_data/site.json");
+const { isPostIndexable } = require("./tools/featured-quality");
 
 function assetVersion() {
   return siteData.assetVersion || "1";
@@ -50,7 +34,7 @@ module.exports = function (eleventyConfig) {
         return true;
       }
       if (!inputPath.includes("posts")) return false;
-      return !isPostIndexable(data);
+      return !isPostIndexable(data, inputPath);
     }
   });
 
@@ -61,7 +45,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("indexablePosts", function (collectionApi) {
     return collectionApi
       .getFilteredByGlob("src/posts/*.md")
-      .filter((item) => isPostIndexable(item.data))
+      .filter((item) => isPostIndexable(item.data, item.inputPath))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -69,7 +53,7 @@ module.exports = function (eleventyConfig) {
     const tagSet = new Set();
     collectionApi
       .getFilteredByGlob("src/posts/*.md")
-      .filter((item) => isPostIndexable(item.data))
+      .filter((item) => isPostIndexable(item.data, item.inputPath))
       .forEach((item) => {
         const tags = Array.isArray(item.data.tags) ? item.data.tags : [];
         tags.forEach((tag) => {
@@ -90,7 +74,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("postsByTag", function (posts, tag) {
     if (!Array.isArray(posts)) return [];
     return posts.filter((post) => {
-      if (!isPostIndexable(post.data)) return false;
+      if (!isPostIndexable(post.data, post.inputPath)) return false;
       const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
       return tags.includes(tag);
     });
